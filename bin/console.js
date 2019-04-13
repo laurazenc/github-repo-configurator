@@ -2,6 +2,7 @@
 
 const commander = require('commander');
 const pkg = require('../package.json');
+const chalk = require('chalk');
 const getLabelsFromRepo = require('../src/getLabelsFromRepo');
 
 var program = new commander.Command();
@@ -34,7 +35,7 @@ program
     'set github repo (also settable with a GITHUB_REPO environment variable).',
     process.env.GITHUB_REPO
   )
-  .option('-d, --download', 'Download data locally')
+  .option('-d, --download [download]', 'Download data locally')
   .on('option:user', function() {
     process.env.GITHUB_USERNAME = this.user;
   })
@@ -44,7 +45,21 @@ program
   .on('option:token', function() {
     process.env.GITHUB_ACCESS_TOKEN = this.token;
   })
-  .action(getLabelsFromRepo);
+  .action(args => {
+    if (!args.repo || !args.user) {
+      console.error('Invalid parameters');
+      console.log('');
+      console.log('Examples:');
+      console.log('  $ get-labels -u username -r reponame');
+      process.exit(1);
+    }
+    getLabelsFromRepo(args);
+  });
+
+program.on('command:*', function() {
+  console.error('Invalid command: %s\nSee --help for a list of available commands.', program.args.join(' '));
+  process.exit(1);
+});
 program.parse(process.argv);
 if (!program.args.length) {
   program.help();
