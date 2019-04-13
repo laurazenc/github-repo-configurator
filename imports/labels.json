@@ -1,0 +1,117 @@
+[
+    {
+        "name": "priority: low",
+        "color": "0e8a16",
+        "aliases": [
+            "priority"
+        ]
+    },
+    {
+        "name": "priority: medium",
+        "color": "fbca04",
+        "aliases": [
+            "priority"
+        ]
+    },
+    {
+        "name": "priority: high",
+        "color": "d93f0b",
+        "aliases": [
+            "priority"
+        ]
+    },
+    {
+        "name": "priority: critical",
+        "color": "ee0701",
+        "aliases": [
+            "priority"
+        ]
+    },
+    {
+        "name": "type: bug 🐞",
+        "color": "d73a4a",
+        "aliases": [
+            "bug"
+        ]
+    },
+    {
+        "name": "type: enhancement ✨",
+        "color": "68d882",
+        "aliases": [
+            "enhancement",
+            "feature"
+        ]
+    },
+    {
+        "name": "type: question ⁉️",
+        "color": "87ffe1",
+        "aliases": [
+            "question",
+            "type"
+        ]
+    },
+    {
+        "name": "type: discussion",
+        "color": "cc317c",
+        "aliases": [
+            "discussion",
+            "type"
+        ]
+    },
+    {
+        "name": "type: documentation",
+        "color": "207de5",
+        "aliases": [
+            "documentation"
+        ]
+    },
+    {
+        "name": "type: design",
+        "color": "eb6420",
+        "aliases": [
+            "design"
+        ]
+    },
+    {
+        "name": "status: good starter issue",
+        "color": "bfe5bf",
+        "aliases": [
+            "beginner-friendly",
+            "beginner",
+            "good-starter-issue",
+            "starter-issue"
+        ]
+    },
+    {
+        "name": "status: help wanted 🆘",
+        "color": "008672",
+        "aliases": [
+            "help wanted",
+            "status"
+        ]
+    },
+    {
+        "name": "status: wontfix",
+        "color": "cccccc",
+        "aliases": [
+            "wontfix",
+            "wont-fix"
+        ]
+    },
+    {
+        "name": "status: duplicate",
+        "color": "cccccc",
+        "aliases": [
+            "duplicate",
+            "status"
+        ]
+    },
+    {
+        "name": "status: blocked ⚓️",
+        "color": "000000",
+        "aliases": [
+            "blocked",
+            "status"
+        ]
+    }
+]
