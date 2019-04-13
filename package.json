@@ -2,9 +2,12 @@
   "name": "github-repo-configurator",
   "version": "0.0.0",
   "description": "Github repository configuration tool",
-  "main": "index.js",
+  "bin": {
+    "github-repo-configurator": "bin/console.js"
+  },
   "scripts": {
-    "dev": "nodemon lib/api.js",
+    "dev": "nodemon src/lib/api.js",
+    "build": "rimraf dist && cross-env babel src -d dist -s --ignore '**/*.test.js' --copy-files",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -59,10 +62,16 @@
     }
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "babel-cli": "^6.26.0",
     "babel-plugin-source-map-support": "^2.0.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.7.0"
+    "babel-preset-env": "^1.7.0",
+    "bluebird": "^3.5.4",
+    "commander": "^2.20.0",
+    "cross-env": "^5.2.0",
+    "dotenv": "^7.0.0",
+    "table": "^5.2.3"
   }
 }
