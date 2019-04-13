@@ -1,0 +1,68 @@
+{
+  "name": "github-repo-configurator",
+  "version": "0.0.0",
+  "description": "Github repository configuration tool",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon lib/api.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laurazenc/github-repo-configurator.git"
+  },
+  "author": "laurazenc@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/laurazenc/github-repo-configurator/issues"
+  },
+  "homepage": "https://github.com/laurazenc/github-repo-configurator#readme",
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-import": "^2.17.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "nodemon": "^1.18.11",
+    "prettier": "^1.17.0"
+  },
+  "nodemonConfig": {
+    "execMap": {
+      "js": "babel-node"
+    }
+  },
+  "babel": {
+    "sourceMaps": "both",
+    "plugins": [
+      "transform-runtime",
+      "transform-object-rest-spread"
+    ],
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ],
+    "env": {
+      "production": {
+        "plugins": [
+          "source-map-support"
+        ],
+        "ignore": [
+          "**/__tests__/**"
+        ]
+      }
+    }
+  },
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-source-map-support": "^2.0.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0"
+  }
+}
