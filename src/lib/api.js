@@ -31,21 +31,14 @@ class ApiClient {
     }
   }
 
-  createLabel(repo, label) {
-    return new Promise((resolve, reject) => {
-      const endpoint = `/repos/${repo}/labels`;
-      this.apiClient.post(endpoint, label, (error, status, createdLabel) => {
-        if (error) {
-          error.method = 'POST';
-          error.endpoint = endpoint;
-          return reject(error);
-        }
-        if (status !== 201) {
-          return reject(new Error(`API responded with ${status} status`));
-        }
-        resolve(createdLabel);
-      });
-    });
+  async createLabel(user, repo, newLabel) {
+    const endpoint = `/repos/${user}/${repo}/labels`;
+    try {
+      const result = await axiosInstance.post(endpoint, newLabel);
+      return result.data;
+    } catch (err) {
+      return err.response.data;
+    }
   }
 
   updateLabel(repo, labelName, label) {

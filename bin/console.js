@@ -2,8 +2,12 @@
 
 const commander = require('commander');
 const pkg = require('../package.json');
+const path = require('path');
 const chalk = require('chalk');
+const inquirer = require('inquirer');
 const getLabelsFromRepo = require('../src/getLabelsFromRepo');
+const importLabels = require('../src/importLabels');
+const createLabel = require('../src/createLabel');
 
 var program = new commander.Command();
 
@@ -19,7 +23,7 @@ program
   .option(
     '-l, --labels <path>',
     'the path or URL to look for the label configuration in. Default: labels.json',
-    'labels.json'
+    'imports/labels.json'
   );
 program
   .command('get-labels')
@@ -54,6 +58,113 @@ program
       process.exit(1);
     }
     getLabelsFromRepo(args);
+  });
+
+program
+  .command('import-labels')
+  .alias('il')
+  .description('Import labeld from to your repo')
+  .option(
+    '-u, --user <user>',
+    'set github user (also settable with a GITHUB_USERNAME environment variable).',
+    process.env.GITHUB_USERNAME
+  )
+  .option(
+    '-r, --repo <repo>',
+    'set github repo (also settable with a GITHUB_REPO environment variable).',
+    process.env.GITHUB_REPO
+  )
+  .option('-s, --soft-run', 'display changes but do not apply them')
+  .option('-d, --delete-existing', 'delete already existing labels')
+  .on('option:user', function() {
+    process.env.GITHUB_USERNAME = this.user;
+  })
+  .on('option:repo', function() {
+    process.env.GITHUB_REPO = this.repo;
+  })
+  .action(args => {
+    if (!args.repo || !args.user) {
+      console.error('Invalid parameters');
+      console.log('');
+      console.log('Examples:');
+      console.log('  $ get-labels -u username -r reponame');
+      process.exit(1);
+    }
+    const labels = path.resolve(process.cwd(), program.labels);
+    if (labels) importLabels(args, labels);
+  });
+
+program
+  .command('create')
+  .alias('c')
+  .description('Create label to your repo')
+  .option(
+    '-u, --user <user>',
+    'set github user (also settable with a GITHUB_USERNAME environment variable).',
+    process.env.GITHUB_USERNAME
+  )
+  .option(
+    '-r, --repo <repo>',
+    'set github repo (also settable with a GITHUB_REPO environment variable).',
+    process.env.GITHUB_REPO
+  )
+  .on('option:user', function() {
+    process.env.GITHUB_USERNAME = this.user;
+  })
+  .on('option:repo', function() {
+    process.env.GITHUB_REPO = this.repo;
+  })
+  .action(args => {
+    if (!args.repo || !args.user) {
+      console.error('Invalid parameters');
+      console.log('');
+      console.log('Examples:');
+      console.log('  $ get-labels -u username -r reponame');
+      process.exit(1);
+    }
+    inquirer
+      .prompt([
+        {
+          type: 'input',
+          name: 'name',
+          default: null,
+          message: 'Label name',
+          validate: function(value) {
+            if (value.length) {
+              return true;
+            }
+            console.error('Please enter a valid label name');
+            process.exit(1);
+          }
+        },
+        {
+          type: 'input',
+          name: 'color',
+          message: 'Color',
+          validate: function(value) {
+            if (value.length) {
+              return true;
+            }
+            console.error('Please enter a valid color');
+            process.exit(1);
+          }
+        },
+        {
+          type: 'input',
+          name: 'description',
+          message: 'Description',
+          validate: function(value) {
+            if (value.length) {
+              return true;
+            }
+            console.error('Please enter a valid description');
+            process.exit(1);
+          }
+        }
+      ])
+      .then(answers => {
+        createLabel(args, answers);
+      });
   });
 
 program.on('command:*', function() {
